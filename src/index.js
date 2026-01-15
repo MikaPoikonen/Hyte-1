@@ -1,17 +1,56 @@
-import http from 'http';
+import express from 'express';
 const hostname = '127.0.0.1';
+const app = express();
 const port = 3000;
-
-const server = http.createServer((req, res) => {
-    console.log('Request:', req.url, req.method, req.headers);
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end(`<h1>Welcome to my REST API!</h1><p> Haettu url ${req.url}</p>`);
+//Dummy dataa (nollautuu aina kun sovellus käynnistyy)
+const items = [
+  [
+    {id: 1, name: 'Omena'},
+    {id: 2, name: 'Appelsiini'},
+    {id: 3, name: 'Banaani'}
+  ],
+];
+// parsitaan json data pyyttönstä ja lisää request-objektiin(ennen post ja että post toimisi)
+app.use(express.json());
+//API root
+app.get('/', (req, res) => {
+  res.send('Welcome to my REST API!'); //tämän saa kopsattua eri sivuille /keijo ja lähetetään vastaus
 });
 
-server.listen(port, hostname, () => {
-
-    console.log(`Server running at http://${hostname}:${port}/`);
+//GET all items
+app.get('/items', (req, res) => {
+  res.json(items); //voi laittaa .send ja näyttää json express. res.json vanha tapa
 });
-//npm run dev käynnistää scriptin ja 
+
+
+//GET ites based it
+app.get('/items/:id', (req, res) => {
+    console.log('getting item id', req.params.id); //haetaan id req parametrillä
+    const itemFound = items.find(item => item.id == req.params.id);
+    if (itemFound){
+  res.json(itemFound); 
+} else {
+    res.status(404).json({message: 'item not found'})
+
+  }}
+);
+
+//TODO: add PUT route for items
+//TODO: ADD DELETE route for items
+
+//ADD new items"
+app.post('/items', (req, res) => {
+    //console.log('add item request body', req.body);
+    // TODO: lisää id listaan lisättävälle objektille
+    items.push(req.body) // pushataan req.bodyyn
+  res.status(201).json({message: 'New item added'});//voi ketjuttaa status koodin ja lähetetään jsonmuotoisena
+  });
+
+
+
+app.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
+//npm run dev käynnistää scriptin ja
 // päivittää automaattisesti
 // res end haetaan nyt url pyynnöt ja tulostetaan consoleen

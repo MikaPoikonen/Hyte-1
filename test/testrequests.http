@@ -1,0 +1,12 @@
+# Test HTTP requests
+### use with: REST CLIENT extension
+
+### GET all items
+
+GET http://localhost:3000/items
+
+### ADD NEW item.  Eka serveri, millänen contentin tyyppi ja alle tieto
+POST http://localhost:3000/items
+Content-Type: application/json
+
+{"name": "Mandariini"}
