@@ -36,13 +36,44 @@ app.get('/items/:id', (req, res) => {
 );
 
 //TODO: add PUT route for items
+app.put('/items/:id', (req, res) => {
+  
+  const itemFound =items[0].find(item => item.id == req.params.id); // haetaan id perusteella indeksi 0 eli items taulukosta id
+  if (itemFound){
+    itemFound.name = req.body.name; //päivitetään nimen arvo
+    res.json({message: 'Nimi päivitetty'})
+  } else {
+    res.status(404).json({message: 'item not found'})
+  }
+});
+
+
 //TODO: ADD DELETE route for items
+
+//DELETE item by id
+app.delete('/items/:id', (req, res) => {
+  // etsitään id:n indeksi taulukosta 0 eli id
+  const index = items[0].findIndex(
+    item => item.id == req.params.id
+  );
+
+  if (index !== -1) {
+    items[0].splice(index, 1); //  poistaa id tietoineen indeksistä 0
+    res.json({message: 'Item deleted'});
+  } else {
+    res.status(404).json({message: 'item not found'});
+  }
+});
+
 
 //ADD new items"
 app.post('/items', (req, res) => {
-    //console.log('add item request body', req.body);
+    const newItem = {
+      id: items[0].length + 1,
+      name: req.body.name //otetaan nimi bodystä
+    };
     // TODO: lisää id listaan lisättävälle objektille
-    items.push(req.body) // pushataan req.bodyyn
+    items[0].push(newItem) // pushataan req.bodyyn
   res.status(201).json({message: 'New item added'});//voi ketjuttaa status koodin ja lähetetään jsonmuotoisena
   });
 
