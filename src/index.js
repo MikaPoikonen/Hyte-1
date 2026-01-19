@@ -12,8 +12,14 @@ const items = [
 ];
 // parsitaan json data pyyttönstä ja lisää request-objektiin(ennen post ja että post toimisi)
 app.use(express.json());
+
+//staattinens webbi sivusto (front end) palvelin
+app.use(express.static('public'));//käytetään public kansiota staattiseen sisältöön app.use(/'kansio'express.static('public'));
+
+
+
 //API root
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.send('Welcome to my REST API!'); //tämän saa kopsattua eri sivuille /keijo ja lähetetään vastaus
 });
 
