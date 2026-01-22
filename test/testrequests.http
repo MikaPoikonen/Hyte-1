@@ -54,3 +54,24 @@ Content-Type: application/json
     "password": "Makkonen"
     
   }
+
+#################################
+### Get user by id 3
+GET {{apiurl}}/users/3
+Content-Type: application/json
+
+##### Update email of user id 3
+PUT {{apiurl}}/users/3
+content-type: application/json
+
+
+{
+  "email": "vaihdettuid3@metropolia.fi"
+}
+
+
+###### User delete by id 2
+
+DELETE {{apiurl}}/users/2
+
+#######################
