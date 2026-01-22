@@ -1,5 +1,5 @@
 import express from 'express';
-import { deleteItemById, getItemById, getItems, postItem, putItemById } from './items';
+import { deleteItemById, getItemById, getItems, postItem, putItemById } from './items.js';
 const hostname = '127.0.0.1';
 const app = express();
 const port = 3000;
@@ -25,25 +25,30 @@ app.get('/api', (req, res) => {
 
 
 //GET all items
-app.get('/items', getItems); //voi laittaa .send ja näyttää json express. res.json vanha tap
+app.get('/api/items', getItems); //voi laittaa .send ja näyttää json express. res.json vanha tap
 
 
 //GET ites based it
-app.get('/items/:id', getItemById);
+app.get('/api/items/:id', getItemById);
 
 
 //TODO: add PUT route for items
-app.put('/items/:id', putItemById);
+app.put('/api/items/:id', putItemById);
 
 
 //TODO: ADD DELETE route for items
 // Opettajan ratkais
 //DELETE item by id
-app.delete('/items/:id', deleteItemById);
+app.delete('/api/items/:id', deleteItemById);
 
 
 //ADD new items"
-app.post('/items', postItem);
+app.post('/api/items', postItem);
+
+
+
+// Users recoursce endpoints
+app.get('/users')
 
 
 
