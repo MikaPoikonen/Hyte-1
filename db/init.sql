@@ -1,3 +1,6 @@
+
+CREATE DATABASE harjoitus;
+
 CREATE TABLE users (
   user_id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(50) NOT NULL UNIQUE,
@@ -66,7 +69,7 @@ VALUES
 (2, 2050, 2000, 7200, 82.00);
 
 
-SELECT d.*, u.username FROM dietplans d
+SELECT d.*, u.username FROM users d
 JOIN users u on u.user_id = d.user_id
 WHERE u.user_name LIKE '%mi%';
 
@@ -83,4 +86,6 @@ SET calories_eaten = 2100,
 WHERE user_id = 1
 AND DATE(created_at) = '2026-01-26';
 
+SELECT * FROM users;
 
+SELECT * from dailyhealthstats;
