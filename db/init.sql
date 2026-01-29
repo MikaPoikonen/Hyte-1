@@ -83,12 +83,4 @@ SET calories_eaten = 2100,
 WHERE user_id = 1
 AND DATE(created_at) = '2026-01-26';
 
-SELECT u.username,
-  DATE(dhs.created_at) AS day,
-  dhs.calories_eaten,
-  dhs.calories_used,
-  dhs.steps,
-  dhs.weight_today
-FROM DailyHealthStats dhs
-JOIN Users u ON u.user_id = dhs.user_id
-WHERE u.user_name = 'johndoe';
+
