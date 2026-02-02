@@ -11,7 +11,7 @@ const port = 3000;
 //Dummy dataa (nollautuu aina kun sovellus käynnistyy)
 // Sallitaan kaikki html pyynnöt. Eli enable CORS
 // muista myös importata import cors from 'cors';
-app.user(cors());
+app.use(cors());
 
 
 // parsitaan json data pyyttönstä ja lisää request-objektiin(ennen post ja että post toimisi)
