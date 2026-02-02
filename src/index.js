@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import itemRouter from './routes/item-router.js';
 import userRouter from './routes/user-router.js';
 import requestLogger from './middlewares/logger.js';
@@ -8,6 +9,10 @@ const app = express();
 const port = 3000;
 
 //Dummy dataa (nollautuu aina kun sovellus käynnistyy)
+// Sallitaan kaikki html pyynnöt. Eli enable CORS
+// muista myös importata import cors from 'cors';
+app.user(cors());
+
 
 // parsitaan json data pyyttönstä ja lisää request-objektiin(ennen post ja että post toimisi)
 app.use(express.json());
@@ -16,7 +21,7 @@ app.use(express.json());
 app.use('/', express.static('public')); //käytetään public kansiota staattiseen sisältöön app.use(/'kansio'express.static('public'));
 
 // Oma Loggeri middleware, käytössä koko sovelluksen laajuisesti eli käsittelee kaikki http-pyynnöt
-app.use(requestLogger);
+app.use(requestLogger);// Tämä viimeisenä
 
 //API root
 app.get('/api', (req, res) => {
