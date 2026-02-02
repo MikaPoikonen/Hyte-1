@@ -1,19 +1,29 @@
 import express from 'express';
 import itemRouter from './routes/item-router.js';
 import userRouter from './routes/user-router.js';
+import requestLogger from'./middlewares/logger.js';
 
 
 const hostname = '127.0.0.1';
 const app = express();
 const port = 3000;
+
+
+
+
+
+
 //Dummy dataa (nollautuu aina kun sovellus käynnistyy)
 
 // parsitaan json data pyyttönstä ja lisää request-objektiin(ennen post ja että post toimisi)
 app.use(express.json());
 
 //staattinens webbi sivusto (front end) palvelin
-app.use(express.static('public'));//käytetään public kansiota staattiseen sisältöön app.use(/'kansio'express.static('public'));
+app.use('/',express.static('public'));//käytetään public kansiota staattiseen sisältöön app.use(/'kansio'express.static('public'));
 
+
+// Oma Loggeri middleware, käytössä koko sovelluksen laajuisesti eli käsittelee kaikki http-pyynnöt
+app.use(requestLogger);
 
 
 //API root

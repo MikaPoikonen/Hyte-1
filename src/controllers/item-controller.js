@@ -1,6 +1,7 @@
 import items from "../models/item-model.js";
 
 
+
 const getItems = (req, res) => {
     res.json(items);
 }
