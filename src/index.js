@@ -1,6 +1,8 @@
 import express from 'express';
-import { deleteItemById, getItemById, getItems, postItem, putItemById } from './items.js';
-import { getUsers, postLogin, postUser,getUserid,putUserById,deleteUserById } from './users.js';
+import itemRouter from './routes/item-router.js';
+import userRouter from './routes/user-router.js';
+
+
 const hostname = '127.0.0.1';
 const app = express();
 const port = 3000;
@@ -24,48 +26,9 @@ app.get('/api', (req, res) => {
  // res.json(items, getItems);
  //} //voi laittaa .send ja näyttää json express. res.json vanha tapa
 
+app.use('/api/items', itemRouter);
 
-//GET all items
-app.get('/api/items', getItems); //voi laittaa .send ja näyttää json express. res.json vanha tap
-
-
-//GET ites based it
-app.get('/api/items/:id', getItemById);
-
-
-//TODO: add PUT route for items
-app.put('/api/items/:id', putItemById);
-
-
-//TODO: ADD DELETE route for items
-// Opettajan ratkais
-//DELETE item by id
-app.delete('/api/items/:id', deleteItemById);
-
-
-//ADD new items"
-app.post('/api/items', postItem);
-
-
-
-
-app.get('/api/users',getUsers);
-
-//POST new USER
-app.post('/api/users', postUser);
-
-
-// post user logging
-app.post('/api/users/login',postLogin);
-
-//TODO get user by id
-  app.get('/api/users/:id',getUserid);
-  
-//PUT user by id
-  app.put('/api/users/:id', putUserById);
-
-  //TODO DELETE user by id
-  app.delete('/api/users/:id', deleteUserById)
+app.use('/api/users',userRouter);
 
 
 app.listen(port, hostname, () => {
