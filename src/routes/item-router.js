@@ -3,24 +3,30 @@ import {
   deleteItemById,
   getItemById,
   getItems,
-  postItem,
+  postNewItem,
   putItemById,
 } from '../controllers/item-controller.js';
 
 const itemRouter = express.Router();
 
-itemRouter
-  .route('/')
-  .get(getItems) //get items
-  .post(postItem); // post item
+// All endpoints for 'items' resource
 
-//GET ites based it
 itemRouter
+  // define route
+  .route('/')
+  // Get all items
+  .get(getItems)
+  // Add new item
+  .post(postNewItem);
+
+itemRouter
+  // define sub route
   .route('/:id')
-  .get(getItemById) //hakee controllerista
-  //Put route for items
+  // Get item based on id
+  .get(getItemById)
+  // PUT route for items
   .put(putItemById)
-  //DELETE item by id
+  // DELETE route for items
   .delete(deleteItemById);
 
 export default itemRouter;

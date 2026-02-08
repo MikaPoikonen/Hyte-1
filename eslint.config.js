@@ -11,4 +11,3 @@ export default [
   },
   js.configs.recommended,
 ];
-//# sift alt f ja prettier

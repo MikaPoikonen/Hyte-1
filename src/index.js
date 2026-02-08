@@ -3,43 +3,44 @@ import cors from 'cors';
 import itemRouter from './routes/item-router.js';
 import userRouter from './routes/user-router.js';
 import requestLogger from './middlewares/logger.js';
-
+import entryRouter from './routes/entry-router.js';
 const hostname = '127.0.0.1';
 const app = express();
 const port = 3000;
 
-//Dummy dataa (nollautuu aina kun sovellus käynnistyy)
-// Sallitaan kaikki html pyynnöt. Eli enable CORS
-// muista myös importata import cors from 'cors';
+// enable CORS requests
 app.use(cors());
 
-
-// parsitaan json data pyyttönstä ja lisää request-objektiin(ennen post ja että post toimisi)
+// parsitaan json data pyynnöstä ja lisätään request-objektiin
 app.use(express.json());
+// tarjoillaan webbisivusto (front-end) palvelimen juuressa
+app.use('/', express.static('public'));
+// Oma loggeri middleware, käytössä koko sovelluksen laajuisesti eli käsittee kaikki http-pyynnöt
+app.use(requestLogger);
 
-//staattinens webbi sivusto (front end) palvelin
-app.use('/', express.static('public')); //käytetään public kansiota staattiseen sisältöön app.use(/'kansio'express.static('public'));
 
-// Oma Loggeri middleware, käytössä koko sovelluksen laajuisesti eli käsittelee kaikki http-pyynnöt
-app.use(requestLogger);// Tämä viimeisenä
 
-//API root
+
+
+
+
+// API root
 app.get('/api', (req, res) => {
-  res.send('Welcome to my REST API!'); //tämän saa kopsattua eri sivuille /keijo ja lähetetään vastaus
+  res.send('This is dummy items API!');
 });
 
-//GET all items
-//app.get('/items', (req, res) => {
-// res.json(items, getItems);
-//} //voi laittaa .send ja näyttää json express. res.json vanha tapa
+//users recoursce router for all users
+app.use('/api/users', userRouter);
 
+//diary entries recource router
+app.use('/api/entries',entryRouter);
+
+
+
+// Dummy items resource
 app.use('/api/items', itemRouter);
 
-app.use('/api/users', userRouter);
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
-//npm run dev käynnistää scriptin ja
-// päivittää automaattisesti
-// res end haetaan nyt url pyynnöt ja tulostetaan consoleen

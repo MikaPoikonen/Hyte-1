@@ -1,22 +1,47 @@
-const users = [
-  {
-    id: 1,
-    username: 'johndoe',
-    password: 'password1',
-    email: 'johndoe@example.com',
-  },
-  {
-    id: 2,
-    username: 'janedoe',
-    password: 'password2',
-    email: 'janedoe@example.com',
-  },
-  {
-    id: 3,
-    username: 'bobsmith',
-    password: 'password3',
-    email: 'bobsmith@example.com',
-  },
-];
+import promisePool from '../utils/database.js'; //importataan yhteys databaseen
 
-export default users;
+//TODO: lisää modelit reiteille muokkaa kontrollerit reiteille:
+// GET /api/users - list all users
+//GET /api/uders/:id - get users by id
+// POST /api/users - add new user
+
+
+const getUsers = async () => {
+  const sql = 'SELECT * FROM users';
+  const [rows] = await promisePool.query(sql);
+  return rows;
+}
+
+const getUserById = async (id) =>{
+  try{
+    const [result] = await promisePool.execute (
+      'SELECT * FROM users WHERE user_id = ?',[id]);
+      return result[0];
+    } catch (e) {
+      console.error('error', e.message);
+    }
+    
+  };
+
+  const addUser = async (username,password,email) => {
+    const sql = `INSERT INTO users(username,password,email) VALUES (?,?,?)`;
+    const params = [username,password,email]
+    try {
+      const rows = await promisePool.execute(sql,params);
+      return rows[0].insertId;
+    } catch (e) {
+      console.error('error', e.message);
+    }
+  }
+  
+  
+
+
+//Huom: virheenkäsittely puuttuu
+const findUserByUserName = async (username) => {
+const sql = 'select * FROM users WHERE username = ?';
+const [rows] = await promisePool.execute(sql,[username]);
+return rows[0]; //palautetaan taulukon eka rivi
+};
+
+export {findUserByUserName, getUsers,getUserById,addUser};

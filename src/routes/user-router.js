@@ -1,19 +1,25 @@
 import express from 'express';
-import { deleteUserById, getUserid, getUsers, postLogin, postUser } from '../controllers/user-contoller.js';
+import {getUsersController, postLogin, postUser,getUSerByIdController} from '../controllers/user-controller.js';
+
 const userRouter = express.Router();
 
-
+// Users resource endpoints
 userRouter.route('/')
-.get(getUsers)
-.post(postUser);
-// post user
-userRouter.post('/login',postLogin);
-// getuser by id
-userRouter.get('/login',getUserid);
-// update / put user
-userRouter.put('/login',getUserid);
-// delete user by id
-userRouter.delete('/login',deleteUserById);
+// GET all users
+.get(getUsersController)
+// POST new user
+userRouter.post('/',postUser);
+
+userRouter.get('/:id',getUSerByIdController)
+// POST user login
+userRouter.post('/login', postLogin);
+
+//add new user
 
 
-  export default userRouter;
+// TODO: get user by id
+// app.get('/api/users/:id');
+// TODO: put user by id
+// TODO: delete user by id
+
+export default userRouter;
